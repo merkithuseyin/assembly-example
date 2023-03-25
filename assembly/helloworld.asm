@@ -13,13 +13,14 @@
 
 ; compile, link and execute: "nasm -f elf64 helloworld.asm -o helloworld.o; ld helloworld.o -o helloworld; ./helloworld"
 
+bits 64
+global _start         
+
 section .data
       message db "Hello World !", 10      ; message = "Hello World !\n"
       message_len equ $ - message         ; message_len = length of 'message'
 
 section .text
-      global _start                       
-
       _start:
             mov rax, 1                    ; SYS_WRITE (int fileDescriptor, const void *buf, size_t count)   https://man7.org/linux/man-pages/man2/write.2.html
             mov rdi, 1                    ; arg0 = 1 (stdout)
