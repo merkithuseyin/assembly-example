@@ -1,11 +1,15 @@
-Prerequisites:
+Prerequisites: 
+
     1. x86_64 CPU ("uname -m")
     2. 64 bit Linux OS ("getconf LONG_BIT")
     3. "sudo apt-get update"
     4. "sudo apt-get install nasm"
     5. "sudo apt-get install build-essential"
+    
+***
 
 Storage
+
     1 byte (8 bit)    : byte,  DB, RESB
     2 bytes (16 bit)  : word,  DW, RESW
     4 bytes (32 bit)  : dword, DD, RESD
@@ -14,8 +18,10 @@ Storage
     16 bytes (128 bit): oword, DO, RESO, DDQ, RESDQ
     32 bytes (256 bit): yword, DY, RESY
     64 bytes (512 bit): zword, DZ, RESZ
+    
 
 General Purpose Registers
+
     64bit   32bit   16bit   8bit
     ----------------------------
     rax	    eax	    ax	    al
@@ -36,10 +42,13 @@ General Purpose Registers
     r15	    r15d    r15w    r15b
 
 RSP Register (Stack Pointer Register):          Used to point to the current top of the stack.
+
 RBP Register (Base Pointer Register):           Used as a base pointer during function calls.
+
 RIP Register (Instruction Pointer Register):    Used by the CPU to point to the next instruction to be executed.
 
 Memory Layout
+    
     |--------------------------| .... High Memory   
     | Stack                    |
     |                          |
@@ -57,7 +66,10 @@ Memory Layout
     | Reserved                 |
     |--------------------------| .... Low Memory
 
+***
+
 .data section 
+
     This section is for "declaring initialized data".
     db	8bit
     dw	16bit
@@ -74,8 +86,9 @@ Memory Layout
         var2 db "A"             ; String Character
         var3 dw 1000            ; 16bit Variable
         var4 dd 10, 20, 30      ; 3 Element Array
-
+	
 .bss section
+
     This section is where you declare your variables.
 
     section .bss
@@ -85,6 +98,7 @@ Memory Layout
         arr4 resq 200    ; 200 element quad array
 
 .text section
+
     This is where the actual assembly code is written. The .text section must begin with the declaration global _start, which just tells the kernel where the program execution begins. 
     (It's like the main function in C or Java, only it's not a function, just a starting point.) Example:
 
@@ -97,14 +111,20 @@ Memory Layout
         .
         .
 
+***
+
 Data Movement
+
     mov rax, 100            ; rax = 0x00000064
     mov rcx, -1             ; rcx = 0xffffffffffffffff
     
     mov rax, qword[VAR_B]   ; Value of the VAR_B in rax
     mov rax, VAR_B          ; Address of the VAR_B in rax
 
+***
+
 Integer Arithmetic Instructions
+
     add <destination> , <source>    ; x = x + y
     sub <destination> , <source>    ; x = x - y
     inc <operand>                   ; x++
@@ -114,12 +134,14 @@ Integer Arithmetic Instructions
     div <divisor>                   ; [EDX EAX] / divisor   ->   EAX (Quotient), EDX (Reminder)  
 
 Logical Instructions
+
     and <destination> , <source>
     or  <destination> , <source>
     xor <destination> , <source>
     not <operand>
 
 Control Instructions
+
     jmp <label>                     ; Jump to specified label
     cmp <destination> , <source>    ;    
 
@@ -145,11 +167,14 @@ Control Instructions
     ja  <label>         ; unsigned >
     jae <label>         ; unsigned >=
 
+***
 
 Macros
+
     %define ... ...
 
 Multi Line Macros
+
     %macro <name> <number_of_arguments>
     ...
     %endmacro
